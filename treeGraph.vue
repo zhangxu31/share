@@ -16,13 +16,14 @@
       <el-form-item>
       </el-form-item>
     </el-form>
-    <div id="treeGraph">
-
+    <div>
+      <d3tree id="treeGraph" ref="tree" :data="treeData">
+      </d3tree>
     </div>
   </div>
 </template>
 <script>
-  import * as d3 from 'd3';
+  import D3tree from './svg/subtree.vue'
   export default {
     data () {
       return {
@@ -30,57 +31,48 @@
           item1: '',
           item2: ''
         },
-        treeData : [
-        {
+        treeData: {
           "name": "Top Level",
-          "parent": "null",
           "children": [
             {
               "name": "Level 2: A",
-              "parent": "Top Level",
               "children": [
-                {
-                  "name": "Son of A",
-                  "parent": "Level 2: A"
-                },
-                {
-                  "name": "Daughter of A",
-                  "parent": "Level 2: A"
-                }
+                { "name": "Son of A" },
+                { "name": "Daughter of A" }
               ]
             },
-            {
-              "name": "Level 2: B",
-              "parent": "Top Level"
-            }
+            { "name": "Level 2: B" }
           ]
         }
-      ]
       }
     },
+    components: {
+      D3tree
+    },
     mounted () {
-      this.init();
     },
     methods: {
 
     }
   }
 </script>
-<style lang="scss">
-  .demo-form-inline {
-    .el-input {
-      width: 100px;
-    }
-  }
-.axis path,
-.axis line{
-    fill: none;
-    stroke: black;
-    shape-rendering: crispEdges;
+<style>
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
 }
-.axis text {
-    font-family: sans-serif;
-    font-size: 11px;
+
+.node text { font: 12px sans-serif; }
+
+.node--internal text {
+  text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
 }
 </style>
 
